@@ -62,6 +62,18 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+        
+        'mysql_schoolpro' => [
+            'driver' => 'mysql',
+            'host' => env('DB_SCHOOLPRO_HOST', '127.0.0.1'),
+            'database' => env('DB_SCHOOLPRO_DATABASE', 'schoolpro'),
+            'username' => env('DB_SCHOOLPRO_USERNAME', 'root'),
+            'password' => env('DB_SCHOOLPRO_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+        ],
+
 
         'pgsql' => [
             'driver' => 'pgsql',
@@ -125,7 +137,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
