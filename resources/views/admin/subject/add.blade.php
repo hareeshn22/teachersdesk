@@ -4,6 +4,8 @@
 
 @section ('css')
 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <link rel="stylesheet" href="{{ asset('backend/css/functions.css') }}">
 
 @endsection
 
@@ -58,16 +60,30 @@
                 <div class="row items-push">
 
                     <div class="col-12">
+                       <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label class="form-label" for="stream">Syllabus</label>
+                                <select class="form-select " id="stream" name="streamid" required="">
+                                    <option selected="" disabled>Select Syllabus</option>
+                                    @foreach ($streams as $stream)
+                                        <option value="{{ $stream->id }}" {{ old('streamid') == $stream->id ? 'Selected' : '' }}>
+                                            {{ $stream->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                        </div>
                         <div class="row mb-4">
                             <div class="col-md-8">
-                                <label class="form-label" for="course">Class</label>
-                                <select class="form-select" id="course" name="streamid" required="">
+                                <label class="form-label" for="class">Class</label>
+                                <select class="form-select select2" id="class" name="courseid" required="">
                                     <option selected="" disabled> Select Class </option>
-                                    @foreach ($courses as $course)
+                                   {{-- @foreach ($courses as $course)
                                         <option value="{{ $course->id }}" {{ old('courseid') == $course->id ? 'Selected' : '' }}>
                                             {{ $course->name }}
                                         </option>
-                                    @endforeach
+                                    @endforeach --}}
                                 </select>
 
                             </div>
@@ -75,7 +91,7 @@
 
                         <div class="row mb-4">
                             <div class="col-md-8">
-                                <label class="form-label" for="name">Name</label>
+                                <label class="form-label" for="name">Subject Name</label>
                                 <input type="text" class="form-control form-control-lg" id="name" name="name">
                             </div>
                         </div>
@@ -110,65 +126,67 @@
 
 
     <!-- functions plugin -->
-    <script src="{{ asset('backend/js/functions.min.js') }}"></script>
+    <script src="{{ asset('backend/js/functions.js') }}"></script>
 
     <script>
-        ClassicEditor
-            .create(document.querySelector('#js-ckeditor'), {
-                // removePlugins: ['Image', 'MediaEmbed'],
-                toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo']
-            })
-            .catch(error => {
-                console.error(error);
-            });
-        //     import { BlockToolbar } from 'ckeditor5';
-        // const { BlockToolbar} = CKEDITOR;
-        // ClassicEditor
-        //     .create(document.querySelector('#js-ckeditor'), {
-        //         //  plugins: [ /* ... */ , AutoImage ]
-        //         // plugins: [ BlockToolbar,],
-        //         removePlugins: ['Image', 'MediaEmbed'],
-
-        //         ClassicEditor
-        //             .create(document.querySelector('#editor'), {
-        //                 removePlugins: ['Image', 'MediaEmbed'],
-        //                 toolbar: ['bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo']
-        //         // blockToolbar: [
-        //         //     'uploadImage'
-        //         // ],
-
-        //     })
-        //     .then(editor => {
-        //         window.editor = editor;
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
-
-        // $('#js-ckeditor').ckeditor(function(){}, {toolbar: 'Basic'});
-
-
-
-
-
+         $(".select2").select2();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         $(document).ready(function () {
-            //select2
-            $('.js-select2').select2();
-            // summernote init
-            // $('.postcontent').summernote({
-            //     placeholder: 'Fill Description',
-            //     tabsize: 2,
-            //     height: 300,
-            //     toolbar: [
-            //         ['style', ['style']],
-            //         ['font', ['bold', 'italic', 'underline', 'clear', 'strikethrough']],
-            //         ['color', ['color']],
-            //         ['para', ['ul', 'ol', 'paragraph']],
-            //         ['table', ['table']],
-            //         ['insert', ['link', ]],
-            //         ['view', ['fullscreen', 'codeview']]
-            //     ]
-            // });
+
+            // On Stream Change
+            $('#stream').on('change', function (e) {
+                var cat_id = e.target.value;
+                console.log(cat_id);
+                $.ajax({
+                    url: "{{ route('admin.courses.filterbys') }}",
+                    type: "POST",
+                    data: {
+                        id: cat_id
+                    },
+                    success: function (data) {
+                        $('#class').empty();
+                        $('#class').append('<option value="" disabled selected> Select Class</option>');
+                        $.each(data, function (index, course) {
+                            $('#class').append('<option value="' + course.id + '">' + course.name + '</option>');
+                            // $.each(subcategory.subcategories, function (index, subcategory) {
+                            //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                            // })
+                        })
+                    }
+                })
+            });
+            // On Course Change
+            $('#class').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.subjects.filterbys') }}",
+                        type: "POST",
+                        data: {
+                            id: cid
+                        },
+                        success: function (data) {
+                            $('#subject').empty();
+                            $('#subject').append('<option value="" disabled selected> Select Subject</option>');
+                            $.each(data, function (index, course) {
+                                $('#subject').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
 
         });
     </script>

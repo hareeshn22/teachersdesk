@@ -4,6 +4,8 @@
 
 @section ('css')
 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <link rel="stylesheet" href="{{ asset('backend/css/functions.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
 @endsection
 
@@ -42,8 +44,8 @@
             Add Topic
         </h2>
         <!-- <h3 class="fs-base fw-medium text-muted mb-0">
-                        This is the 7th property you are adding to your portfolio.
-                    </h3> -->
+                            This is the 7th property you are adding to your portfolio.
+                        </h3> -->
     </div>
 
 
@@ -74,8 +76,8 @@
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-8">
-                            <label class="form-label" for="course">Class</label>
-                            <select class="form-select" id="course" name="courseid" required="">
+                            <label class="form-label" for="class">Class</label>
+                            <select class="form-select" id="class" name="courseid" required="">
                                 <option selected="" disabled> Select Class </option>
                                 @foreach ($courses as $course)
                                     <option value="{{ $course->id }}" {{ old('courseid') == $course->id ? 'Selected' : '' }}>
@@ -105,7 +107,7 @@
                     <div class="row mb-4">
                         <div class="col-md-8">
                             <label for="school"> Lesson </label>
-                            <select id="school" name="schoolid" class="select2 custom-select form-control" required>
+                            <select id="school" name="lessonid" class="select2 custom-select form-control" required>
                                 <option value="" disabled selected> Select Lesson</option>
                                 @foreach ($lessons as $lesson)
                                     <option value="{{ $lesson->id }}" {{ old('lessonid') == $lesson->id ? 'Selected' : '' }}>
@@ -119,31 +121,31 @@
 
                     <div class="row mb-4">
                         <div class="col-md-8">
-                            <label class="form-label" for="name"> Name</label>
+                            <label class="form-label" for="name"> Topic Name</label>
                             <input type="text" class="form-control form-control-lg" id="name" name="name">
                         </div>
                     </div>
 
                     <!-- <div class="row mb-4">
-                                <div class="col-md-8">
+                                    <div class="col-md-8">
 
-                                    <input id="select-logo" type="hidden" name="image" value="">
-                                    <a class="btn btn-primary mt-2 mt-xl-0" onClick="add()" href="javascript:void(0)"> <i
-                                            class="mdi mdi-plus text-white"></i> Select Image </a>
+                                        <input id="select-logo" type="hidden" name="image" value="">
+                                        <a class="btn btn-primary mt-2 mt-xl-0" onClick="add()" href="javascript:void(0)"> <i
+                                                class="mdi mdi-plus text-white"></i> Select Image </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div id="show-image" class="mb-4">
+                                <div id="show-image" class="mb-4">
 
-                            </div> -->
+                                </div> -->
 
 
 
                     <!-- <div class="row mb-4">
-                                <div class="col-md-8">
-                                    <label class="form-label" for="video">Video Link</label>
-                                    <input type="text" class="form-control form-control-lg" id="video" name="video_link">
-                                </div>
-                            </div> -->
+                                    <div class="col-md-8">
+                                        <label class="form-label" for="video">Video Link</label>
+                                        <input type="text" class="form-control form-control-lg" id="video" name="video_link">
+                                    </div>
+                                </div> -->
 
 
 
@@ -259,7 +261,68 @@
     <!-- functions plugin -->
     <script src="{{ asset('backend/js/functions.min.js') }}"></script>
 
+
     <script>
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).ready(function () {
+
+            // On Stream Change
+            $('#stream').on('change', function (e) {
+                var cat_id = e.target.value;
+                console.log(cat_id);
+                $.ajax({
+                    url: "{{ route('admin.courses.filterbys') }}",
+                    type: "POST",
+                    data: {
+                        id: cat_id
+                    },
+                    success: function (data) {
+                        $('#class').empty();
+                        $('#class').append('<option value="" disabled selected> Select Class</option>');
+                        $.each(data, function (index, course) {
+                            $('#class').append('<option value="' + course.id + '">' + course.name + '</option>');
+                            // $.each(subcategory.subcategories, function (index, subcategory) {
+                            //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                            // })
+                        })
+                    }
+                })
+            });
+            // On Course Change
+            $('#class').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.subjects.filterbys') }}",
+                        type: "POST",
+                        data: {
+                            id: cid
+                        },
+                        success: function (data) {
+                            $('#subject').empty();
+                            $('#subject').append('<option value="" disabled selected> Select Subject</option>');
+                            $.each(data, function (index, course) {
+                                $('#subject').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+        });
+
 
 
         function add() {
@@ -293,7 +356,7 @@
             //select2
 
             $("custom-select").select2();
-            
+
 
         });
     </script>

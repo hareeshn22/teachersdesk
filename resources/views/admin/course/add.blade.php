@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section ('title') Add Course @endsection
+@section ('title') Add Class @endsection
 
 @section ('css')
 
@@ -39,7 +39,7 @@
 
     <div class="my-3 text-center">
         <h2 class="fw-bold mb-2">
-            Add Course
+            Add Class
         </h2>
         <!-- <h3 class="fs-base fw-medium text-muted mb-0">
                 This is the 7th property you are adding to your portfolio.
@@ -49,7 +49,7 @@
 
     <div class="block block-rounded">
         <div class="block-header block-header-default">
-            <h3 class="block-title">Course <small>Fill Required fields</small></h3>
+            <h3 class="block-title">Class <small>Fill Required fields</small></h3>
         </div>
         <div class="block-content">
             <form action="{{ route('admin.courses.store') }}" method="POST" enctype="multipart/form-data">
@@ -76,7 +76,7 @@
 
                         <div class="row mb-4">
                             <div class="col-md-8">
-                                <label class="form-label" for="name"> Name</label>
+                                <label class="form-label" for="name">Class Name</label>
                                 <input type="text" class="form-control form-control-lg" id="name" name="name">
                             </div>
                         </div>

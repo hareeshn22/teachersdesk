@@ -109,7 +109,7 @@ Route::middleware(['auth'])
 
         });
 
-        Route::name("admin.notes")->middleware(['auth'])->prefix('note')->group(function () {
+        Route::name("admin.notes")->middleware(['auth'])->prefix('notes')->group(function () {
 
             Route::get('/', [NoteController::class, 'index']);
             Route::get('/create', [NoteController::class, 'create'])->name('.add');

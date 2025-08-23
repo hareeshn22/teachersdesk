@@ -91,7 +91,7 @@ class LessonController extends Controller
         //
         $this->validate($request, [
             'name' => 'required',
-            // 'logo'  => 'required',
+            'subjectid'  => 'required',
             // 'content' => 'required',
             // 'phone' => 'required',
         ]);

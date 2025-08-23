@@ -51,8 +51,8 @@
             Add Lesson
         </h2>
         <!-- <h3 class="fs-base fw-medium text-muted mb-0">
-                                            This is the 7th property you are adding to your portfolio.
-                                        </h3> -->
+                                                This is the 7th property you are adding to your portfolio.
+                                            </h3> -->
     </div>
 
 
@@ -88,10 +88,10 @@
                                 <select class="form-select" id="class" name="courseid" required="">
                                     <option selected="" disabled> Select Class </option>
                                     <!-- @foreach ($courses as $course)
-                                            <option value="{{ $course->id }}" {{ old('courseid') == $course->id ? 'Selected' : '' }}>
-                                                {{ $course->name }}
-                                            </option>
-                                        @endforeach -->
+                                                <option value="{{ $course->id }}" {{ old('courseid') == $course->id ? 'Selected' : '' }}>
+                                                    {{ $course->name }}
+                                                </option>
+                                            @endforeach -->
                                 </select>
 
                             </div>
@@ -103,10 +103,10 @@
                                 <select class="form-select" id="subject" name="subjectid" required="">
                                     <option selected="" disabled>Select Subject</option>
                                     <!-- @foreach ($subjects as $subject)
-                                            <option value="{{ $subject->id }}" {{ old('subjectid') == $subject->id ? 'Selected' : '' }}>
-                                                {{ $subject->name }}
-                                            </option>
-                                        @endforeach -->
+                                                <option value="{{ $subject->id }}" {{ old('subjectid') == $subject->id ? 'Selected' : '' }}>
+                                                    {{ $subject->name }}
+                                                </option>
+                                            @endforeach -->
                                 </select>
 
                             </div>
@@ -118,22 +118,22 @@
 
                         <div class="row mb-4">
                             <div class="col-md-8">
-                                <label class="form-label" for="name"> Name</label>
+                                <label class="form-label" for="name">Lesson Name</label>
                                 <input type="text" class="form-control form-control-lg" id="name" name="name">
                             </div>
                         </div>
 
                         <!-- <div class="row mb-4">
-                                                        <div class="col-md-8">
-                                                            <label class="form-label" for="linktype">lesson Link Type</label>
-                                                            <select class="form-select" id="linktype" name="type" required="">
-                                                                <option selected="" disabled>Select Type</option>
-                                                                <option value="post"> Post </option>
-                                                                <option value="problem"> Problem </option>
+                                                            <div class="col-md-8">
+                                                                <label class="form-label" for="linktype">lesson Link Type</label>
+                                                                <select class="form-select" id="linktype" name="type" required="">
+                                                                    <option selected="" disabled>Select Type</option>
+                                                                    <option value="post"> Post </option>
+                                                                    <option value="problem"> Problem </option>
 
-                                                            </select>
-                                                        </div>
-                                                    </div> -->
+                                                                </select>
+                                                            </div>
+                                                        </div> -->
 
                     </div>
 
@@ -296,6 +296,62 @@
                             $('#subject').append('<option value="" disabled selected> Select Subject</option>');
                             $.each(data, function (index, course) {
                                 $('#subject').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+            // On Lesson Change
+            $('#lesson').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.topics.filterbys') }}",
+                        type: "POST",
+                        data: {
+                            sid: cid
+                        },
+                        success: function (data) {
+                            $('#topic').empty();
+                            $('#topic').append('<option value="" disabled selected> Select Topic</option>');
+                            $.each(data, function (index, course) {
+                                $('#topic').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+            // On Lesson Change
+            $('#topic').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.topics.filtersub') }}",
+                        type: "POST",
+                        data: {
+                            sid: cid
+                        },
+                        success: function (data) {
+                            $('#subtopic').empty();
+                            $('#subtopic').append('<option value="" disabled selected> Select SubTopic</option>');
+                            $.each(data, function (index, course) {
+                                $('#subtopic').append('<option value="' + course.id + '">' + course.name + '</option>');
                                 // $.each(subcategory.subcategories, function (index, subcategory) {
                                 //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
                                 // })

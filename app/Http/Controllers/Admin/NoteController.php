@@ -27,9 +27,9 @@ class NoteController extends Controller
                 ->make(true);
         }
 
-        // $langs    = Language::all();
+         $streams  = Stream::all();
         $lessons = Lesson::all();
-        return view('admin.notes.index', ['lessons' => $lessons]);
+        return view('admin.notes.index', compact('lessons', 'streams'));
     }
 
     /**

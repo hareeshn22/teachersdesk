@@ -234,7 +234,7 @@
                             <li class="nav-main-item {{ str_contains(url()->current(), '/notes') ? 'open' : ''}}">
                                 <a class="nav-main-link nav-main-link-submenu  {{ str_contains(url()->current(), '/notes') ? 'active' : ''}}"
                                     data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                                    <i class="nav-main-link-icon fa-regular fa-file-alt"></i>
+                                    <i class="nav-main-link-icon fa-regular fa-note-sticky"></i>
                                     <span class="nav-main-link-name">Notes</span>
                                 </a>
                                 <ul class="nav-main-submenu">
@@ -252,7 +252,7 @@
                                 </ul>
                             </li>
 
-                            <li class="nav-main-item {{ str_contains(url()->current(), '/images') ? 'open' : ''}}">
+                            {{--<li class="nav-main-item {{ str_contains(url()->current(), '/images') ? 'open' : ''}}">
                                 <a class="nav-main-link nav-main-link-submenu {{ str_contains(url()->current(), '/images') ? 'active' : ''}}"
                                     data-toggle="submenu" aria-haspopup="true" aria-expanded="true" href="#">
                                     <i class="nav-main-link-icon fa fa-image"></i>
@@ -271,7 +271,7 @@
                                     </li>
 
                                 </ul>
-                            </li>
+                            </li> --}}
 
                             <li class="nav-main-item {{ str_contains(url()->current(), '/pages') ? 'open' : ''}}">
                                 <a class="nav-main-link nav-main-link-submenu {{ str_contains(url()->current(), '/pages') ? 'active' : ''}}"

@@ -87,15 +87,17 @@ class SubjectController extends Controller
         //
         $this->validate($request, [
             'name' => 'required',
-            // 'logo'  => 'required',
+            'courseid'  => 'required',
             // 'content' => 'required',
             // 'phone' => 'required',
         ]);
 
+        $course = Course::find($request->courseid);
+        $stream = $course->stream->name;
         Subject::create([
-            'course_id' => $request->course_id,
+            'course_id' => $request->courseid,
             'name' => $request->name,
-            'code' => $request->code
+            'code' => strtoupper($stream . $course->name . substr($request->name,0,3))
 
         ]);
 

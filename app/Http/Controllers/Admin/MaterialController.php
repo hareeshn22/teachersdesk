@@ -30,8 +30,9 @@ class MaterialController extends Controller
         }
 
         // $langs    = Language::all();
+        $streams = Stream::all();
         $lessons = Lesson::all();
-        return view('admin.material.index', ['lessons' => $lessons]);
+        return view('admin.material.index', compact('lessons', 'streams' ));
     }
 
     /**
@@ -40,7 +41,7 @@ class MaterialController extends Controller
     public function filter(Request $request)
     {
         //
-        $materials = Material::with('media')->select('materials.*');
+        // $materials = Material::with('media')->select('materials.*');
 
         return DataTables::of(Material::with('media')->select('materials.*'))
             ->filter(function ($query) use ($request) {
@@ -117,14 +118,14 @@ class MaterialController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'topicid' => 'required|exists:topics,id',
+            'subtopicid' => 'required|exists:topics,id',
             'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
             'info' => 'required|string',
             'audio_path' => 'nullable|mimes:mp3,wav,ogg|max:5120',
         ]);
 
         $material = Material::create([
-            'topic_id' => $validated['topicid'],
+            'topic_id' => $validated['subtopicid'],
             'content' => $validated['info'],
         ]);
 

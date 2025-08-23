@@ -253,32 +253,32 @@
 
             });
              // On Subject Change
-            // $('#subject').on('change', function (e) {
-            //     var cid = e.target.value;
-            //     console.log(cid);
-            //     if (cid != '') {
-            //         $.ajax({
-            //             url: "{{ route('admin.lessons.filterbys') }}",
-            //             type: "POST",
-            //             data: {
-            //                 id: cid
-            //             },
-            //             success: function (data) {
-            //                 $('#lesson').empty();
-            //                 $('#lesson').append('<option value="" disabled selected> Select Lesson</option>');
-            //                 $.each(data, function (index, course) {
-            //                     $('#lesson').append('<option value="' + course.id + '">' + course.name + '</option>');
-            //                     // $.each(subcategory.subcategories, function (index, subcategory) {
-            //                     //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
-            //                     // })
-            //                 })
-            //             }
-            //         })
+            $('#subject').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.lessons.filterbys') }}",
+                        type: "POST",
+                        data: {
+                            id: cid
+                        },
+                        success: function (data) {
+                            $('#lesson').empty();
+                            $('#lesson').append('<option value="" disabled selected> Select Lesson</option>');
+                            $.each(data, function (index, course) {
+                                $('#lesson').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
 
 
-            //     }
+                }
 
-            // });
+            });
 
             // On Lesson Change
             $('#lesson').on('change', function (e) {

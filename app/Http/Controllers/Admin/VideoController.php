@@ -27,9 +27,9 @@ class VideoController extends Controller
                 ->make(true);
         }
 
-        // $langs    = Language::all();
+        $streams  = Stream::all();
         $lessons = Lesson::all();
-        return view('admin.video.index', ['lessons' => $lessons]);
+        return view('admin.video.index', compact('lessons', 'streams'));
     }
  /**
      * Filter the listing of the resource.
@@ -51,10 +51,10 @@ class VideoController extends Controller
                     //     }
                     // }
     
-                    if ($request->get('courseId')) {
-                        $schoolId = $request->get('courseId');
+                    if ($request->get('subtopicId')) {
+                        $schoolId = $request->get('subtopicId');
                         if ($schoolId) {
-                            $query->where('course_id', '=', $schoolId);
+                            $query->where('topic_id', '=', $schoolId);
                         }
                     }
 

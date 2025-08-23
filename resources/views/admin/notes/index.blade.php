@@ -21,12 +21,12 @@
                     <h3>Notes</h3>
                 </div>
                 <!-- <div class="col-6">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"> <i data-feather="home"></i></a></li>
-                        <li class="breadcrumb-item">Notes</li>
-                        <li class="breadcrumb-item active">Notes List</li>
-                    </ol>
-                </div> -->
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#"> <i data-feather="home"></i></a></li>
+                                <li class="breadcrumb-item">Notes</li>
+                                <li class="breadcrumb-item active">Notes List</li>
+                            </ol>
+                        </div> -->
             </div>
         </div>
     </div>
@@ -41,7 +41,59 @@
 
                             <div class="row ">
 
-                                <div class="col-lg-3">
+
+                                <div class="col-lg-3 mt-2">
+                                    <div class="form-group">
+                                        <label for="school">
+                                            Syllabus </label>
+                                        <select id="stream" name="streamid" class="select2 custom-select form-control"
+                                            required>
+                                            <option value="" disabled selected> Select Syllabus</option>
+                                            @foreach ($streams as $stream)
+                                                <option value="{{ $stream->id }}" {{ old('streamid') == $stream->id ? 'Selected' : '' }}> {{ $stream->name }}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 mt-2">
+                                    <div class="form-group">
+                                        <label for="school">
+                                            Class</label>
+                                        <select id="class" name="courseid" class="select2 custom-select form-control"
+                                            required>
+                                            <option value="" disabled selected> Select Class</option>
+                                            {{--@foreach ($courses as $course)
+                                            <option value="{{ $course->id }}" {{ old('courseid')==$course->id ? 'Selected' :
+                                                '' }}> {{ $course->name }}
+                                            </option>
+                                            @endforeach--}}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 mt-2">
+                                    <div class="form-group">
+                                        <label for="school">
+                                            Subject</label>
+                                        <select id="subject" name="subjectid" class="select2 custom-select form-control"
+                                            required>
+                                            <option value="" disabled selected> Select Subject</option>
+                                            {{--@foreach ($courses as $course)
+                                            <option value="{{ $course->id }}" {{ old('courseid')==$course->id ? 'Selected' :
+                                                '' }}> {{ $course->name }}
+                                            </option>
+                                            @endforeach--}}
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-3 mt-2">
                                     <div class="form-group">
                                         <label for="school">
                                             Lesson </label>
@@ -57,36 +109,67 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="col-lg-3">
+                                <div class="col-lg-3 mt-2">
                                     <div class="form-group">
-                                        <label for="duration"> Time Duration </label>
-                                        <select id="duration" name="duration" class="select2 custom-select form-control"
+                                        <label for="topic">
+                                            Topic </label>
+                                        <select id="topic" name="topicid" class="select2 custom-select form-control"
                                             required>
-                                            <option value="today"> Today </option>
-                                            <option value="week"> This Week </option>
-                                            <option value="month"> This Month </option>
-                                            <option value="custom"> Custom Dates </option>
+                                            <option value="" disabled selected> Select Topic</option>
+                                            <!-- @foreach ($lessons as $lesson)
+                                                                <option value="{{ $lesson->id }}" {{ old('lessonid') == $lesson->id ? 'Selected' : '' }}> {{ $lesson->name }}
+                                                                </option>
+                                                            @endforeach -->
+
                                         </select>
                                     </div>
-                                </div> -->
+                                </div>
+                                <div class="col-lg-3 mt-2">
+                                    <div class="form-group">
+                                        <label for="subtopic">
+                                            SubTopic </label>
+                                        <select id="subtopic" name="subtopicid" class="select2 custom-select form-control"
+                                            required>
+                                            <option value="" disabled selected> Select SubTopic</option>
+                                            <!-- @foreach ($lessons as $lesson)
+                                                                <option value="{{ $lesson->id }}" {{ old('lessonid') == $lesson->id ? 'Selected' : '' }}> {{ $lesson->name }}
+                                                                </option>
+                                                            @endforeach -->
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-lg-3">
+                                                                        <div class="form-group">
+                                                                            <label for="duration"> Time Duration </label>
+                                                                            <select id="duration" name="duration" class="select2 custom-select form-control"
+                                                                                required>
+                                                                                <option value="today"> Today </option>
+                                                                                <option value="week"> This Week </option>
+                                                                                <option value="month"> This Month </option>
+                                                                                <option value="custom"> Custom Dates </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div> -->
 
                                 <!-- <div id="period" class="col-lg-6 row" style="display: none">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="startdate"> Date From </label>
-                                            <input id="startDate" type="text" name="startdate"
-                                                class="form-control datepicker" data-provide="datepicker"
-                                                data-date-format="dd M, yyyy" value="" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="enddate"> Date To</label>
-                                            <input id="endDate" type="text" name="enddate" class="form-control datepicker"
-                                                data-provide="datepicker" data-date-format="dd M, yyyy" value="" required>
-                                        </div>
-                                    </div>
-                                </div> -->
+                                                                        <div class="col-lg-6">
+                                                                            <div class="form-group">
+                                                                                <label for="startdate"> Date From </label>
+                                                                                <input id="startDate" type="text" name="startdate"
+                                                                                    class="form-control datepicker" data-provide="datepicker"
+                                                                                    data-date-format="dd M, yyyy" value="" required>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6">
+                                                                            <div class="form-group">
+                                                                                <label for="enddate"> Date To</label>
+                                                                                <input id="endDate" type="text" name="enddate" class="form-control datepicker"
+                                                                                    data-provide="datepicker" data-date-format="dd M, yyyy" value="" required>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> -->
 
                                 <div class="col-lg-3 mt-3">
                                     <button type="submit" class="btn btn-primary btn-lg  ">Search</button>
@@ -121,9 +204,9 @@
 
                         @endif
                         <!-- <span>DataTables has most features enabled by default, so all you
-                            need to do to use it with your own tables is to call the construction
-                            function:<code>$().DataTable();</code>.</span><span>Searching, ordering and paging goodness
-                            will be immediately added to the table, as shown in this note.</span> -->
+                                    need to do to use it with your own tables is to call the construction
+                                    function:<code>$().DataTable();</code>.</span><span>Searching, ordering and paging goodness
+                                    will be immediately added to the table, as shown in this note.</span> -->
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -163,6 +246,124 @@
 
     <script src="{{ asset('backend/js/data.js') }}"></script>
     <script src="{{ asset('backend/js/functions.js') }}"></script>
+
+    <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).ready(function () {
+
+            // On Stream Change
+            $('#stream').on('change', function (e) {
+                var cat_id = e.target.value;
+                console.log(cat_id);
+                $.ajax({
+                    url: "{{ route('admin.courses.filterbys') }}",
+                    type: "POST",
+                    data: {
+                        id: cat_id
+                    },
+                    success: function (data) {
+                        $('#class').empty();
+                        $('#class').append('<option value="" disabled selected> Select Class</option>');
+                        $.each(data, function (index, course) {
+                            $('#class').append('<option value="' + course.id + '">' + course.name + '</option>');
+                            // $.each(subcategory.subcategories, function (index, subcategory) {
+                            //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                            // })
+                        })
+                    }
+                })
+            });
+            // On Course Change
+            $('#class').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.subjects.filterbys') }}",
+                        type: "POST",
+                        data: {
+                            id: cid
+                        },
+                        success: function (data) {
+                            $('#subject').empty();
+                            $('#subject').append('<option value="" disabled selected> Select Subject</option>');
+                            $.each(data, function (index, course) {
+                                $('#subject').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+            // On Lesson Change
+            $('#lesson').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.topics.filterbys') }}",
+                        type: "POST",
+                        data: {
+                            sid: cid
+                        },
+                        success: function (data) {
+                            $('#topic').empty();
+                            $('#topic').append('<option value="" disabled selected> Select Topic</option>');
+                            $.each(data, function (index, course) {
+                                $('#topic').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+            // On Lesson Change
+            $('#topic').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.topics.filtersub') }}",
+                        type: "POST",
+                        data: {
+                            sid: cid
+                        },
+                        success: function (data) {
+                            $('#subtopic').empty();
+                            $('#subtopic').append('<option value="" disabled selected> Select SubTopic</option>');
+                            $.each(data, function (index, course) {
+                                $('#subtopic').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+
+
+        });
+    </script>
 
     <script>
         $(".select2").select2();
@@ -211,7 +412,7 @@
                         }
 
                     },
-                    
+
                     {
                         data: 'action',
                         name: 'action',

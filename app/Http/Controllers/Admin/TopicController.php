@@ -66,7 +66,7 @@ class TopicController extends Controller
         // $st_id = $request->stid;
         // $cid = $request->cid;
         $sid = $request->sid;
-        return Topic::where('lesson_id', '=', $sid)->get();
+        return Topic::where('lesson_id', '=', $sid)->where('parent_id', '=', null)->get();
 
     }
 

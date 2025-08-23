@@ -28,8 +28,9 @@ class ExampleController extends Controller
         }
 
         // $langs    = Language::all();
+        $streams = Stream::all();
         $lessons = Lesson::all();
-        return view('admin.example.index', ['lessons' => $lessons]);
+        return view('admin.example.index', compact('lessons', 'streams' ));
     }
 
     /**
@@ -122,6 +123,30 @@ class ExampleController extends Controller
     public function store(Request $request)
     {
         //
+        
+        $validated = $request->validate([
+            'topicid' => 'required|exists:topics,id',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'info' => 'required|string',
+            'audio_path' => 'nullable|mimes:mp3,wav,ogg|max:5120',
+        ]);
+
+        $example = Example::create([
+            'topic_id' => $validated['topicid'],
+            'content' => $validated['info'],
+        ]);
+
+        // Attach image
+        $example->addMedia($request->file('image'))
+            ->toMediaCollection('images');
+
+        // Attach audio if present
+        if ($request->hasFile('audio_path')) {
+            $example->addMedia($request->file('audio_path'))
+                ->toMediaCollection('audio');
+        }
+
+        return back()->with('success', 'You have successfully created the example.');
     }
 
     /**

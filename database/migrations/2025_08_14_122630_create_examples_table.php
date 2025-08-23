@@ -13,9 +13,7 @@ return new class extends Migration {
         Schema::create('examples', function (Blueprint $table) {
             $table->id();
             $table->foreignId('topic_id')->constrained('topics')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('image');
             $table->longText('content'); 
-            $table->string('audio_path')->nullable();
             $table->timestamps();
         });
     }
