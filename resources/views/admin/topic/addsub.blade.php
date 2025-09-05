@@ -4,6 +4,7 @@
 
 @section ('css')
 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
 @endsection
 
@@ -42,8 +43,8 @@
             Add SubTopic
         </h2>
         <!-- <h3 class="fs-base fw-medium text-muted mb-0">
-                        This is the 7th property you are adding to your portfolio.
-                    </h3> -->
+                            This is the 7th property you are adding to your portfolio.
+                        </h3> -->
     </div>
 
 
@@ -74,14 +75,14 @@
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-8">
-                            <label class="form-label" for="course">Class</label>
-                            <select class="form-select" id="course" name="courseid" required="">
+                            <label class="form-label" for="class">Class</label>
+                            <select class="form-select" id="class" name="courseid" required="">
                                 <option selected="" disabled> Select Class </option>
-                                @foreach ($courses as $course)
+                                {{--@foreach ($courses as $course)
                                     <option value="{{ $course->id }}" {{ old('courseid') == $course->id ? 'Selected' : '' }}>
                                         {{ $course->name }}
                                     </option>
-                                @endforeach
+                                @endforeach--}}
                             </select>
 
                         </div>
@@ -92,11 +93,11 @@
                             <label class="form-label" for="subject">Subject</label>
                             <select class="form-select" id="subject" name="subjectid" required="">
                                 <option selected="" disabled>Select Subject</option>
-                                @foreach ($subjects as $subject)
+                                 {{--@foreach ($subjects as $subject)
                                     <option value="{{ $subject->id }}" {{ old('subjectid') == $subject->id ? 'Selected' : '' }}>
                                         {{ $subject->name }}
                                     </option>
-                                @endforeach
+                                @endforeach --}}
                             </select>
 
                         </div>
@@ -104,14 +105,14 @@
 
                     <div class="row mb-4">
                         <div class="col-md-8">
-                            <label for="school"> Lesson </label>
-                            <select id="school" name="schoolid" class="select2 custom-select form-control" required>
+                            <label for="lesson"> Lesson </label>
+                            <select id="lesson" name="lessonid" class="select2 custom-select form-control" required>
                                 <option value="" disabled selected> Select Lesson</option>
-                                @foreach ($lessons as $lesson)
-                                    <option value="{{ $lesson->id }}" {{ old('lessonid') == $lesson->id ? 'Selected' : '' }}>
-                                        {{ $lesson->name }}
-                                    </option>
-                                @endforeach
+                                {{-- @foreach ($lessons as $lesson)
+                                <option value="{{ $lesson->id }}" {{ old('lessonid')==$lesson->id ? 'Selected' : '' }}>
+                                    {{ $lesson->name }}
+                                </option>
+                                @endforeach --}}
 
                             </select>
                         </div>
@@ -121,7 +122,7 @@
                             <label for="topic"> Topic </label>
                             <select id="topic" name="topicid" class="select2 custom-select form-control" required>
                                 <option value="" disabled selected> Select Topic</option>
-                                
+
 
                             </select>
                         </div>
@@ -135,25 +136,25 @@
                     </div>
 
                     <!-- <div class="row mb-4">
-                                <div class="col-md-8">
+                                    <div class="col-md-8">
 
-                                    <input id="select-logo" type="hidden" name="image" value="">
-                                    <a class="btn btn-primary mt-2 mt-xl-0" onClick="add()" href="javascript:void(0)"> <i
-                                            class="mdi mdi-plus text-white"></i> Select Image </a>
+                                        <input id="select-logo" type="hidden" name="image" value="">
+                                        <a class="btn btn-primary mt-2 mt-xl-0" onClick="add()" href="javascript:void(0)"> <i
+                                                class="mdi mdi-plus text-white"></i> Select Image </a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div id="show-image" class="mb-4">
+                                <div id="show-image" class="mb-4">
 
-                            </div> -->
+                                </div> -->
 
 
 
                     <!-- <div class="row mb-4">
-                                <div class="col-md-8">
-                                    <label class="form-label" for="video">Video Link</label>
-                                    <input type="text" class="form-control form-control-lg" id="video" name="video_link">
-                                </div>
-                            </div> -->
+                                    <div class="col-md-8">
+                                        <label class="form-label" for="video">Video Link</label>
+                                        <input type="text" class="form-control form-control-lg" id="video" name="video_link">
+                                    </div>
+                                </div> -->
 
 
 
@@ -303,7 +304,7 @@
             //select2
 
             $("custom-select").select2();
-            
+
 
         });
     </script>
@@ -317,31 +318,165 @@
         $(document).ready(function () {
 
 
+            // $('#class').on('change', function (e) {
+            //     var id = e.target.value;
+            //     console.log(id);
+            //     if (id != '') {
+            //         $.ajax({
+            //             url: "{{ route('admin.academic.filterbys') }}",
+            //             type: "POST",
+            //             data: {
+            //                 id: id
+            //             },
+            //             success: function (data) {
+            //                 $('#pvexam').empty();
+            //                 $('#pvexam').append('<option value="" disabled selected> Select Previous Exam</option>');
+            //                 $.each(data, function (index, exam) {
+            //                     $('#pvexam').append('<option value="' + exam.id + '">' + exam.name + '</option>');
+            //                     // $.each(subcategory.subcategories, function (index, subcategory) {
+            //                     //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+            //                     // })
+            //                 })
+
+            //             }
+            //         })
+
+            //     }
+            // });
+            // On Stream Change
+            $('#stream').on('change', function (e) {
+                var cat_id = e.target.value;
+                console.log(cat_id);
+                $.ajax({
+                    url: "{{ route('admin.courses.filterbys') }}",
+                    type: "POST",
+                    data: {
+                        id: cat_id
+                    },
+                    success: function (data) {
+                        $('#class').empty();
+                        $('#class').append('<option value="" disabled selected> Select Class</option>');
+                        $.each(data, function (index, course) {
+                            $('#class').append('<option value="' + course.id + '">' + course.name + '</option>');
+                            // $.each(subcategory.subcategories, function (index, subcategory) {
+                            //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                            // })
+                        })
+                    }
+                })
+            });
+            
+
             $('#class').on('change', function (e) {
-                var id = e.target.value;
-                console.log(id);
-                if (id != '') {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
                     $.ajax({
-                        url: "{{ route('admin.academic.filterbys') }}",
+                        url: "{{ route('admin.subjects.filterbys') }}",
                         type: "POST",
                         data: {
-                            id: id
+                            id: cid
                         },
                         success: function (data) {
-                            $('#pvexam').empty();
-                            $('#pvexam').append('<option value="" disabled selected> Select Previous Exam</option>');
-                            $.each(data, function (index, exam) {
-                                $('#pvexam').append('<option value="' + exam.id + '">' + exam.name + '</option>');
+                            $('#subject').empty();
+                            $('#subject').append('<option value="" disabled selected> Select Subject</option>');
+                            $.each(data, function (index, course) {
+                                $('#subject').append('<option value="' + course.id + '">' + course.name + '</option>');
                                 // $.each(subcategory.subcategories, function (index, subcategory) {
                                 //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
                                 // })
                             })
-
                         }
                     })
 
+
                 }
+
             });
+            $('#subject').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.lessons.filterbys') }}",
+                        type: "POST",
+                        data: {
+                            id: cid
+                        },
+                        success: function (data) {
+                            $('#lesson').empty();
+                            $('#lesson').append('<option value="" disabled selected> Select Lesson</option>');
+                            $.each(data, function (index, course) {
+                                $('#lesson').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+            // On Lesson Change
+            $('#lesson').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.topics.filterbys') }}",
+                        type: "POST",
+                        data: {
+                            sid: cid
+                        },
+                        success: function (data) {
+                            $('#topic').empty();
+                            $('#topic').append('<option value="" disabled selected> Select Topic</option>');
+                            $.each(data, function (index, course) {
+                                $('#topic').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+            // On Lesson Change
+            $('#topic').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.topics.filtersub') }}",
+                        type: "POST",
+                        data: {
+                            sid: cid
+                        },
+                        success: function (data) {
+                            $('#subtopic').empty();
+                            $('#subtopic').append('<option value="" disabled selected> Select SubTopic</option>');
+                            $.each(data, function (index, course) {
+                                $('#subtopic').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+
         });
     </script>
 

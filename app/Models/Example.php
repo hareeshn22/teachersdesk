@@ -34,6 +34,7 @@ class Example extends Model implements HasMedia
 
     protected $fillable = [
         'topic_id',
+        'extract',
         'content',
     ];
 

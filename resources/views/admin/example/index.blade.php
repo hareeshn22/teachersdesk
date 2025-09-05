@@ -21,12 +21,12 @@
                     <h3>Examples</h3>
                 </div>
                 <!-- <div class="col-6">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#"> <i data-feather="home"></i></a></li>
-                            <li class="breadcrumb-item">Examples</li>
-                            <li class="breadcrumb-item active">Examples List</li>
-                        </ol>
-                    </div> -->
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#"> <i data-feather="home"></i></a></li>
+                                <li class="breadcrumb-item">Examples</li>
+                                <li class="breadcrumb-item active">Examples List</li>
+                            </ol>
+                        </div> -->
             </div>
         </div>
     </div>
@@ -116,9 +116,9 @@
                                             required>
                                             <option value="" disabled selected> Select Topic</option>
                                             <!-- @foreach ($lessons as $lesson)
-                                                    <option value="{{ $lesson->id }}" {{ old('lessonid') == $lesson->id ? 'Selected' : '' }}> {{ $lesson->name }}
-                                                    </option>
-                                                @endforeach -->
+                                                        <option value="{{ $lesson->id }}" {{ old('lessonid') == $lesson->id ? 'Selected' : '' }}> {{ $lesson->name }}
+                                                        </option>
+                                                    @endforeach -->
 
                                         </select>
                                     </div>
@@ -131,9 +131,9 @@
                                             required>
                                             <option value="" disabled selected> Select SubTopic</option>
                                             <!-- @foreach ($lessons as $lesson)
-                                                    <option value="{{ $lesson->id }}" {{ old('lessonid') == $lesson->id ? 'Selected' : '' }}> {{ $lesson->name }}
-                                                    </option>
-                                                @endforeach -->
+                                                        <option value="{{ $lesson->id }}" {{ old('lessonid') == $lesson->id ? 'Selected' : '' }}> {{ $lesson->name }}
+                                                        </option>
+                                                    @endforeach -->
 
                                         </select>
                                     </div>
@@ -173,9 +173,9 @@
 
                         @endif
                         <!-- <span>DataTables has most features enabled by default, so all you
-                                need to do to use it with your own tables is to call the construction
-                                function:<code>$().DataTable();</code>.</span><span>Searching, ordering and paging goodness
-                                will be immediately added to the table, as shown in this example.</span> -->
+                                    need to do to use it with your own tables is to call the construction
+                                    function:<code>$().DataTable();</code>.</span><span>Searching, ordering and paging goodness
+                                    will be immediately added to the table, as shown in this example.</span> -->
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -184,7 +184,7 @@
                                     <tr>
                                     <tr>
                                         <th class="text-center" style="width: 50px;"></th>
-                                        <th>Name</th>
+                                        <th>Image</th>
                                         <!-- <th>Logo</th> -->
                                         <!-- <th class="d-none d-sm-table-cell" style="width: 15%;">Access</th> -->
                                         <th class="text-center" style="width: 130px;">Actions</th>
@@ -363,13 +363,9 @@
                     },
                     {
                         data: 'image',
-                        render: function (data, type, row) {
-                            // Use "type" to avoid rendering image for sorting/searching
-                            if (type === 'display') {
-                                return `<img src="${data}" alt="thumbnail" style="height:50px;">`;
-                            }
-                            return data;
-                        }
+                        name: 'image',
+                        orderable: false,
+                        searchable: false
 
                     },
 

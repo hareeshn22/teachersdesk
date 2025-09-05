@@ -67,7 +67,7 @@ class LessonController extends Controller
         // $st_id = $request->stid;
         // $cid = $request->cid;
         $sid = $request->sid;
-        return Lesson::orderByDesc('id')->where('subject_id' == $sid)->get();
+        return Lesson::orderByDesc('id')->where('subject_id', '=', $request->id)->get();
 
     }
 
@@ -101,7 +101,6 @@ class LessonController extends Controller
             // 'course_id' => $request->course_id,
             'subject_id' => $request->subjectid,
             'name' => $request->name,
-            
         ]);
 
         return back()->with('success', 'You have successfully created the Lesson.');
@@ -127,7 +126,10 @@ class LessonController extends Controller
         $courses = Course::all();
         $subjects = Subject::all();
         $lesson = Lesson::find($id);
-        return view('admin.Lesson.edit', compact('streams', 'courses', 'subjects', 'lesson', ));
+        $ssubject = Subject::find($lesson->subject_id);
+        $scourse = Course::find($ssubject->course_id);
+
+        return view('admin.Lesson.edit', compact('streams', 'courses', 'subjects', 'lesson', 'ssubject', 'scourse' ));
 
     }
 
@@ -142,15 +144,15 @@ class LessonController extends Controller
         // $Lesson->Lesson_id = $request->Lessonid;
         $Lesson->name = $request->name;
 
-        $Lesson->descr = $request->descr;
-        $Lesson->phone = $request->phone;
-        $Lesson->address = $request->address;
-        $Lesson->pcolor = $request->pcolor;
-        $Lesson->scolor = $request->scolor;
+        // $Lesson->descr = $request->descr;
+        // $Lesson->phone = $request->phone;
+        // $Lesson->address = $request->address;
+        // $Lesson->pcolor = $request->pcolor;
+        // $Lesson->scolor = $request->scolor;
 
-        if ($request->logo != '') {
-            $Lesson->logo = $request->logo;
-        }
+        // if ($request->logo != '') {
+        //     $Lesson->logo = $request->logo;
+        // }
 
         $Lesson->save();
 

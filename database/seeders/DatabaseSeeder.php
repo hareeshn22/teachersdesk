@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             SubjectSeeder::class,
             LessonSeeder::class,
             TopicSeeder::class,
+            ApiClientSeeder::class,
+            MaterialSeeder::class,
+            ExampleSeeder::class,
         ]);
     }
 }

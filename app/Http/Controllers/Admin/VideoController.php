@@ -27,11 +27,11 @@ class VideoController extends Controller
                 ->make(true);
         }
 
-        $streams  = Stream::all();
+        $streams = Stream::all();
         $lessons = Lesson::all();
         return view('admin.video.index', compact('lessons', 'streams'));
     }
- /**
+    /**
      * Filter the listing of the resource.
      */
     public function filter(Request $request)
@@ -84,6 +84,31 @@ class VideoController extends Controller
         $topic = Topic::all();
         return view('admin.video.add', compact('streams', 'courses', 'subjects', 'lessons'));
     }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+        $this->validate($request, [
+            // 'name' => 'required',
+            // 'subjectid' => 'required',
+            // 'content' => 'required',
+            // 'phone' => 'required',
+        ]);
+
+        Video::create([
+            // 'stream_id' => $request->streamid,
+            // 'course_id' => $request->course_id,
+            'topic_id' => $request->subtopicid,
+            'video_link' => $request->videolink,
+        ]);
+
+        return back()->with('success', 'You have successfully created the Video.');
+
+    }
+
     /**
      * Display the specified resource.
      */

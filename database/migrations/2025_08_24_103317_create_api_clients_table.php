@@ -10,11 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('examples', function (Blueprint $table) {
+        Schema::create('api_clients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('topic_id')->constrained('topics')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('extract');
-            $table->longText('content'); 
+            $table->string('name');
+            $table->string('token_hash');
             $table->timestamps();
         });
     }
@@ -24,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('examples');
+        Schema::dropIfExists('api_clients');
     }
 };

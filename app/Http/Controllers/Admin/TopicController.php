@@ -101,10 +101,13 @@ class TopicController extends Controller
     {
         //
         $streams = Stream::all();
-        $courses = Course::all();
-        $subjects = Subject::all();
-        $lessons = Lesson::all();
-        return view('admin.topic.addsub', compact('lessons', 'streams', 'courses', 'subjects'));
+        // $courses = Course::all();
+        // $subjects = Subject::all();
+        // $lessons = Lesson::all();
+        return view('admin.topic.addsub', compact(
+            'streams',
+            // 'lessons', 'courses', 'subjects'
+        ));
     }
 
     /**
@@ -135,7 +138,7 @@ class TopicController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'parentid' => 'required',
+            'topicid' => 'required',
             // 'logo'  => 'required',
             // 'content' => 'required',
             // 'phone' => 'required',
@@ -144,7 +147,7 @@ class TopicController extends Controller
         Topic::create([
             'lesson_id' => $request->lessonid,
             'name' => $request->name,
-            'parent_id' => $request->parentid,
+            'parent_id' => $request->topicid,
         ]);
 
         return back()->with('success', 'You have successfully created the Topic.');

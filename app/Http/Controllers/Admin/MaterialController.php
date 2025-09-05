@@ -32,7 +32,7 @@ class MaterialController extends Controller
         // $langs    = Language::all();
         $streams = Stream::all();
         $lessons = Lesson::all();
-        return view('admin.material.index', compact('lessons', 'streams' ));
+        return view('admin.material.index', compact('lessons', 'streams'));
     }
 
     /**
@@ -56,18 +56,25 @@ class MaterialController extends Controller
             })
             ->addColumn('image', function ($row) {
                 $media = $row->getFirstMedia('images');
+                $imageUrl = $media && $media->mime_type === 'image/gif'
+                    ? $media->getUrl()
+                    : $media->getUrl('thumb');
+
                 return $media
-                    ? '<img src="' . $media->getUrl('thumb') . '" width="60">'
+                    ? '<img src="' . 
+                    // $media->getUrl('thumb') 
+                    $imageUrl
+                    . '" width="60">'
                     : '';
             })
-            // ->addColumn('audio', function ($row) {
-            //     $media = $row->getFirstMedia('audio');
-            //     return $media
-            //         ? '<audio controls style="width:150px">
-            //                <source src="'.$media->getUrl().'" type="'.$media->mime_type.'">
-            //            </audio>'
-            //         : '';
-            // })
+            ->addColumn('audio', function ($row) {
+                $media = $row->getFirstMedia('audio');
+                return $media
+                    ? '<audio controls style="width:150px">
+                           <source src="'.$media->getUrl().'" type="'.$media->mime_type.'">
+                       </audio>'
+                    : '';
+            })
             ->addColumn('action', 'admin.helper.action')
             ->rawColumns(['action', 'image'])
             ->addIndexColumn()
@@ -119,13 +126,15 @@ class MaterialController extends Controller
     {
         $validated = $request->validate([
             'subtopicid' => 'required|exists:topics,id',
-            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:5120',
+            'extract' => 'required|string',
             'info' => 'required|string',
             'audio_path' => 'nullable|mimes:mp3,wav,ogg|max:5120',
         ]);
 
         $material = Material::create([
             'topic_id' => $validated['subtopicid'],
+            'extract' => $validated['extract'],
             'content' => $validated['info'],
         ]);
 

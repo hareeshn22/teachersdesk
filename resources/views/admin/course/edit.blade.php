@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section ('title') Edit Slide @endsection
+@section ('title') Edit Class @endsection
 
 @section ('css')
 
@@ -38,7 +38,7 @@
 
 <div class="my-3 text-center">
     <h2 class="fw-bold mb-2">
-        Edit Slide
+        Edit Class
     </h2>
     <!-- <h3 class="fs-base fw-medium text-muted mb-0">
             This is the 7th property you are adding to your portfolio.
@@ -48,71 +48,40 @@
 
 <div class="block block-rounded">
     <div class="block-header block-header-default">
-        <h3 class="block-title">Slide <small>Fill Required fields</small></h3>
+        <h3 class="block-title">Class <small>Fill Required fields</small></h3>
     </div>
     <div class="block-content">
-        <form action="{{ route('admin.slides.update') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.courses.update') }}" method="POST" enctype="multipart/form-data">
 
             @csrf
 
-            <input type="hidden" name="id" value=" {{ $slide->id }}">
+            <input type="hidden" name="id" value=" {{ $course->id }}">
 
             <div class="row items-push">
 
-                <div class="col-12">
-                    <div class="row mb-4">
-                        <div class="col-md-8">
-                            <label class="form-label" for="name"> Name</label>
-                            <input type="text" class="form-control form-control-lg" id="name" name="name" value="{{ $slide->name }}">
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col-md-8">
-                            <label class="form-label" for="img">Image</label>
-                            <select class="form-select" id="img" name="image" required="">
-                                <option selected="" disabled>Select Image</option>
-                                @foreach ($images as $image)
-                                <option value="{{ $image->id }}" {{ $slide->image_id == $image->id ? 'selected' : '' }}>{{ $image->name }}</option>
-                                @endforeach
+                
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label class="form-label" for="stream">Syllabus</label>
+                                <select class="form-select" id="stream" name="streamid" required="">
+                                    <option selected="" disabled>Select Syllabus</option>
+                                    @foreach ($streams as $stream)
+                                        <option value="{{ $stream->id }}" {{ $course->stream_id == $stream->id ? 'Selected' : '' }}>
+                                            {{ $stream->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
 
-                            </select>
+                            </div>
                         </div>
-                    </div>
-                     <div class="row mb-4">
-                        <div class="col-md-8">
-                            <label class="form-label" for="linktype">Slide Link Type</label>
-                            <select class="form-select" id="linktype" name="type" required="">
-                                <option selected="" disabled>Select Type</option>
-                                <option value="post" {{ $slide->post_id != null ? 'selected' : '' }}> Post </option>
-                                <option value="problem" {{ $slide->problem_id != null ? 'selected' : '' }}> Problem </option>
 
-                            </select>
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label class="form-label" for="name">Class Name</label>
+                                <input type="text" class="form-control form-control-lg" id="name" name="name" value="{{ $course->name }}">
+                            </div>
                         </div>
-                    </div>
-                    <div id="post" class="row mb-4" {{ $slide->post_id != '' ? "style='display:show;'" : "style=display:none; " }} >
-                        <div class="col-md-8">
-                            <label class="form-label" for="posts">Post</label>
-                            <select class="form-select" id="posts" name="post">
-                                <option selected="" disabled>Select Post</option>
-                                @foreach ($posts as $post)
-                                    <option value="{{ $post->id }}" {{ $slide->post_id == $post->id ? 'selected' : '' }}> {{ $post->title }} </option>
-                                @endforeach
 
-                            </select>
-                        </div>
-                    </div>
-                    <div id="problem" class="row mb-4"  {{ $slide->problem_id != '' ? "style='display:show;'" : "style=display:none; " }} >
-                        <div class="col-md-8">
-                            <label class="form-label" for="problems">Problem</label>
-                            <select class="form-select" id="problems" name="problem">
-                                <option selected="" disabled>Select Problem</option>
-                                @foreach ($problems as $problem)
-                                    <option value="{{ $problem->id }}" {{ $slide->problem_id == $problem->id ? 'selected' : '' }}> {{ $problem->name }} </option>
-                                @endforeach
-
-                            </select>
-                        </div>
-                    </div>
                 </div>
 
             </div>

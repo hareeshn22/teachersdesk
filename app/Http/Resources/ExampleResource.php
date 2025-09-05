@@ -14,6 +14,14 @@ class ExampleResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'topic_id' => $this->topic_id,
+            'extract' => $this->extract,
+            'content' => $this->content,
+            'image' => $this->getFirstMediaUrl('images', 'thumb'),
+            'voice' => $this->getFirstMediaUrl('audio'),
+        ];
     }
 }

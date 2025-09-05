@@ -125,14 +125,16 @@ class ExampleController extends Controller
         //
         
         $validated = $request->validate([
-            'topicid' => 'required|exists:topics,id',
+            'subtopicid' => 'required|exists:topics,id',
             'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'extract' => 'required|string',
             'info' => 'required|string',
             'audio_path' => 'nullable|mimes:mp3,wav,ogg|max:5120',
         ]);
 
         $example = Example::create([
             'topic_id' => $validated['topicid'],
+            'extract' => $validated['extract'],
             'content' => $validated['info'],
         ]);
 

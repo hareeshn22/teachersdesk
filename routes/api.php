@@ -26,14 +26,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Principal Routes
-Route::prefix('1')->group(function () {
+Route::prefix('1')->middleware('verify.api.token')->group(function () {
 
     // Route::post('/principal/login', [LoginController::class, 'login']);
     // Route::post('/principal/logout', [LoginController::class, 'logout']);
 
     // Lessons
-    Route::get('/lessons/{cid}/{sid}', [LessonController::class, 'index']);
-    Route::get('/lessonsbys/{id}', [LessonController::class, 'villagebyd']);
+    Route::get('/lessons/{sid}', [LessonController::class, 'index']);
+    Route::get('/lessonsbys/{code}', [LessonController::class, 'lessonsbys']);
     Route::get('/lesson/{id}', [LessonController::class, 'show']);
 
     // Topics

@@ -21,6 +21,7 @@ class Subject extends Model
     protected $fillable = [
         'course_id',
         'name',
+        'code',
     ];
 
     public function course(): BelongsTo

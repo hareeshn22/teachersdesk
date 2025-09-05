@@ -19,13 +19,15 @@ class SubjectSeeder extends Seeder
         $subjects = ['Telugu', 'Hindi', 'English', 'Mathematics', 'Science', 'Social Studies', 'Computer', 'Sanskrit',];
 
         $courses = Course::where('stream_id', '=', 1)->get();
+        
 
         foreach ($courses as $course) {
+            $stream = $course->stream->name;
             foreach ($subjects as $subjectName) {
                 Subject::create([
                     'course_id' => $course->id,
                     'name' => $subjectName,
-                    'code' =>  strtoupper($course->stream->name) . strtoupper($course->name) . substr($subjectName, 0,3)
+                    'code' => strtoupper(str_replace(' ', '', $stream) . '-' . str_replace(' ', '',$course->name) . '-' . substr($subjectName, 0, 3))
                 ]);
             }
         }

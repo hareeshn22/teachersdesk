@@ -38,9 +38,9 @@ class CourseController extends Controller
                 ->filter(function ($query) use ($request) {
 
                     if ($request->get('streamId')) {
-                        $lessonId = $request->get('streamId');
-                        if ($lessonId) {
-                            $query->where('stream_id', '=', $lessonId);
+                        $streamId = $request->get('streamId');
+                        if ($streamId) {
+                            $query->where('stream_id', '=', $streamId);
                         }
                     }
 
@@ -106,9 +106,11 @@ class CourseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Course $course)
+    public function edit($id)
     {
-        //
+        $course = Course::find($id);
+        $streams = Stream::all();
+        return view('admin.course.edit', compact('streams', 'course'));
     }
 
     /**
@@ -116,7 +118,17 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        $course = Course::find($request->id);
+
+        // $Lesson->Lesson_id = $request->Lessonid;
+        $course->name = $request->name;
+
+        $course->stream_id = $request->streamid;
+
+        $course->save();
+
+        return redirect()->back()->with('success', 'You have successfully updated the Course.');
+
     }
 
     /**

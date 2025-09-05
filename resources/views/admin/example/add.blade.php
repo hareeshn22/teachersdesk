@@ -78,14 +78,14 @@
                         </div>
                         <div class="row mb-4">
                             <div class="col-md-8">
-                                <label class="form-label" for="class">Course</label>
+                                <label class="form-label" for="class">Class</label>
                                 <select class="form-select" id="class" name="courseid" required="">
-                                    <option selected="" disabled> Select Course </option>
-                                    @foreach ($courses as $course)
+                                    <option selected="" disabled> Select Class </option>
+                                    {{--@foreach ($courses as $course)
                                         <option value="{{ $course->id }}" {{ old('courseid') == $course->id ? 'Selected' : '' }}>
                                             {{ $course->name }}
                                         </option>
-                                    @endforeach
+                                    @endforeach--}}
                                 </select>
 
                             </div>
@@ -96,26 +96,26 @@
                                 <label class="form-label" for="subject">Subject</label>
                                 <select class="form-select" id="subject" name="subjectid" required="">
                                     <option selected="" disabled>Select Subject</option>
-                                    @foreach ($subjects as $subject)
+                                    {{--@foreach ($subjects as $subject)
                                         <option value="{{ $subject->id }}" {{ old('subjectid') == $subject->id ? 'Selected' : '' }}>
                                             {{ $subject->name }}
                                         </option>
-                                    @endforeach
+                                    @endforeach--}}
                                 </select>
 
                             </div>
                         </div>
 
-                         <div class="row mb-4">
+                        <div class="row mb-4">
                             <div class="col-md-8">
                                 <label for="lesson"> Lesson </label>
                                 <select id="lesson" name="lessonid" class="select2 custom-select form-control" required>
                                     <option value="" disabled selected> Select Lesson</option>
-                                    @foreach ($lessons as $lesson)
+                                    {{--@foreach ($lessons as $lesson)
                                         <option value="{{ $lesson->id }}" {{ old('lessonid') == $lesson->id ? 'Selected' : '' }}>
                                             {{ $lesson->name }}
                                         </option>
-                                    @endforeach
+                                    @endforeach--}}
 
                                 </select>
                             </div>
@@ -126,8 +126,24 @@
                                 <select class="form-select" id="topic" name="topicid" required="">
                                     <option selected="" disabled>Select Topic</option>
                                     {{--@foreach ($subjects as $subject)
-                                        <option value="{{ $subject->id }}" {{ old('subjectid') == $subject->id ? 'Selected' : '' }}>{{ $subject->name }}
-                                        </option>
+                                    <option value="{{ $subject->id }}" {{ old('subjectid')==$subject->id ? 'Selected' : ''
+                                        }}>{{ $subject->name }}
+                                    </option>
+                                    @endforeach--}}
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label class="form-label" for="subtopic">SubTopic</label>
+                                <select class="form-select" id="subtopic" name="subtopicid" required="">
+                                    <option selected="" disabled>Select SubTopic</option>
+                                    {{--@foreach ($subjects as $subject)
+                                    <option value="{{ $subject->id }}" {{ old('subjectid')==$subject->id ? 'Selected' : ''
+                                        }}>{{ $subject->name }}
+                                    </option>
                                     @endforeach--}}
                                 </select>
 
@@ -138,6 +154,15 @@
                             <div class="col-md-8">
                                 <label class="form-label" for="fname">Image</label>
                                 <input type="file" class="form-control form-control-lg" id="fname" name="image">
+                            </div>
+                        </div>
+                         <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label class="form-label" for="extract"> Excerpt </label>
+                                <textarea id="extract" name="extract" class="form-control form-control-lg" rows="4"
+                                                                            cols="100%"> {{ old('extract') }}</textarea>
+                                
+
                             </div>
                         </div>
 
@@ -296,6 +321,34 @@
                             $('#topic').append('<option value="" disabled selected> Select Topic</option>');
                             $.each(data, function (index, course) {
                                 $('#topic').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+            // On Lesson Change
+            $('#topic').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.topics.filtersub') }}",
+                        type: "POST",
+                        data: {
+                            sid: cid
+                        },
+                        success: function (data) {
+                            $('#subtopic').empty();
+                            $('#subtopic').append('<option value="" disabled selected> Select SubTopic</option>');
+                            $.each(data, function (index, course) {
+                                $('#subtopic').append('<option value="' + course.id + '">' + course.name + '</option>');
                                 // $.each(subcategory.subcategories, function (index, subcategory) {
                                 //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
                                 // })

@@ -37,7 +37,7 @@ class SubjectController extends Controller
 
                 ->filter(function ($query) use ($request) {
 
-    
+
                     if ($request->get('courseId')) {
                         $courseId = $request->get('courseId');
                         if ($courseId) {
@@ -87,7 +87,7 @@ class SubjectController extends Controller
         //
         $this->validate($request, [
             'name' => 'required',
-            'courseid'  => 'required',
+            'courseid' => 'required',
             // 'content' => 'required',
             // 'phone' => 'required',
         ]);
@@ -97,7 +97,7 @@ class SubjectController extends Controller
         Subject::create([
             'course_id' => $request->courseid,
             'name' => $request->name,
-            'code' => strtoupper($stream . $course->name . substr($request->name,0,3))
+            'code' => strtoupper(str_replace(' ', '', $stream) . '-' . str_replace(' ', '',$course->name) . '-' . substr($request->name, 0, 3))
 
         ]);
 
@@ -117,9 +117,9 @@ class SubjectController extends Controller
      */
     public function edit($id)
     {
-        $courses = Course::all();
+        $streams = Stream::all();
         $subject = Subject::find($id);
-        return view('admin.subject.edit', compact('subject', 'courses', ));
+        return view('admin.subject.edit', compact('subject', 'streams', ));
 
     }
 
@@ -128,7 +128,17 @@ class SubjectController extends Controller
      */
     public function update(Request $request, Subject $subject)
     {
-        //
+        $subject = Subject::find($request->id);
+
+        // $Lesson->Lesson_id = $request->Lessonid;
+        $subject->name = $request->name;
+
+        $subject->stream_id = $request->streamid;
+
+        $subject->save();
+
+        return redirect()->back()->with('success', 'You have successfully updated the Subject.');
+
     }
 
     /**

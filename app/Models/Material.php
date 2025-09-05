@@ -14,19 +14,28 @@ class Material extends Model implements HasMedia
     // use HasFactory;
     use InteractsWithMedia;
 
-    protected $fillable = ['topic_id', 'content'];
+    protected $fillable = ['topic_id', 'extract', 'content',];
 
     // Optional: define conversions for images
     public function registerMediaConversions(Media $media = null): void
     {
-        $this->addMediaConversion('thumb')
-            ->fit('crop', 300, 300)
-            ->nonQueued();
+        // $this->addMediaConversion('thumb')
+        //     ->fit('crop', 300, 300)
+        //     ->nonQueued();
 
-        $this->addMediaConversion('web')
-            ->width(1024)
-            ->height(768)
-            ->sharpen(10);
+        // $this->addMediaConversion('web')
+        //     ->width(1024)
+        //     ->height(768)
+        //     ->sharpen(10);
+
+        if ($media && $media->mime_type !== 'image/gif') {
+            $this->addMediaConversion('thumb')
+                ->width(300)
+                ->height(300)
+                ->quality(70)
+                ->sharpen(10);
+        }
+
     }
 
 

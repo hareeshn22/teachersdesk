@@ -1,22 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api;
-use App\Http\Controllers\Controller;
+namespace App\Http\Controllers;
 
-use App\Http\Resources\VideoResource;
-use App\Models\Video;
+use App\Models\ApiClient;
 use Illuminate\Http\Request;
 
-class VideoController extends Controller
+class ApiClientController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($sid)
+    public function index()
     {
-        return VideoResource::collection(Video::where('topic_id', '=', $sid)->get());
+        //
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -37,7 +34,7 @@ class VideoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Video $video)
+    public function show(ApiClient $apiClient)
     {
         //
     }
@@ -45,7 +42,7 @@ class VideoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Video $video)
+    public function edit(ApiClient $apiClient)
     {
         //
     }
@@ -53,7 +50,7 @@ class VideoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Video $video)
+    public function update(Request $request, ApiClient $apiClient)
     {
         //
     }
@@ -61,7 +58,7 @@ class VideoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Video $video)
+    public function destroy(ApiClient $apiClient)
     {
         //
     }

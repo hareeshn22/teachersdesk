@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->foreignId('topic_id')->constrained('topics')->onUpdate('cascade')->onDelete('cascade');
-            // $table->string('image');
+            $table->text('extract');
             $table->longText('content'); 
             // $table->string('audio_path')->nullable();
             $table->timestamps();

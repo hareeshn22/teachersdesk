@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Lesson;
+use App\Models\Subject;
 use Illuminate\Support\Facades\DB;
 
 class LessonSeeder extends Seeder
@@ -36,6 +37,23 @@ class LessonSeeder extends Seeder
                 // 'stream_id'  => $streams[array_rand($streams)],
                 // 'course_id'  => $courses[array_rand($courses)],
                 'subject_id' => $subjects[array_rand($subjects)],
+                'name'       => $lesson,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
+        $tlessons = [
+            'మా ఊరు – మా గర్వం',
+            'తెలుగమ్మ తల్లి',
+            'వేమన పద్య రత్నావళి',
+        ];
+        $subject = Subject::where('code', '=', 'APSBTM-CLASSVI-TEL' )->first();
+
+        foreach ($tlessons as $lesson) {
+            DB::table('lessons')->insert([
+                // 'stream_id'  => $streams[array_rand($streams)], 
+                // 'course_id'  => $courses[array_rand($courses)],
+                'subject_id' => $subject->id,
                 'name'       => $lesson,
                 'created_at' => now(),
                 'updated_at' => now(),

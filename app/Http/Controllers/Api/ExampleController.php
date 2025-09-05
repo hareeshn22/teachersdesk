@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
-
+use App\Http\Resources\ExampleResource;
+use App\Models\Material;
 use App\Models\Example;
 use Illuminate\Http\Request;
 
@@ -11,9 +12,18 @@ class ExampleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($sid)
     {
-        //
+        return ExampleResource::collection(Example::where('topic_id', '=', $sid)->get());
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function examplesbys($id)
+    {
+        // $subject = Subject::where('code','=', $code)->first();
+        return Example::collection(Example::where('topic_id', '=', $id)->get());
     }
 
     /**
@@ -21,7 +31,11 @@ class ExampleController extends Controller
      */
     public function create()
     {
-        //
+        
+        // $courses = Course::all();
+        // $subjects = Subject::all();
+        // return view('admin.lesson.add', compact('courses', 'subjects'));
+
     }
 
     /**

@@ -46,8 +46,8 @@
             Add Material
         </h2>
         <!-- <h3 class="fs-base fw-medium text-muted mb-0">
-                        This is the 7th property you are adding to your portfolio.
-                    </h3> -->
+                                This is the 7th property you are adding to your portfolio.
+                            </h3> -->
     </div>
 
 
@@ -79,12 +79,12 @@
                         <div class="row mb-4">
                             <div class="col-md-8">
                                 <label class="form-label" for="class">Class</label>
-                                <select class="form-select select2" id="class" name="streamid" required="">
+                                <select class="form-select select2" id="class" name="courseid" required="">
                                     <option selected="" disabled> Select Class </option>
-                                   {{-- @foreach ($courses as $course)
-                                        <option value="{{ $course->id }}" {{ old('courseid') == $course->id ? 'Selected' : '' }}>
-                                            {{ $course->name }}
-                                        </option>
+                                    {{-- @foreach ($courses as $course)
+                                    <option value="{{ $course->id }}" {{ old('courseid')==$course->id ? 'Selected' : '' }}>
+                                        {{ $course->name }}
+                                    </option>
                                     @endforeach --}}
                                 </select>
 
@@ -97,8 +97,9 @@
                                 <select class="form-select select2" id="subject" name="subjectid" required="">
                                     <option selected="" disabled>Select Subject</option>
                                     {{--@foreach ($subjects as $subject)
-                                        <option value="{{ $subject->id }}" {{ old('subjectid') == $subject->id ? 'Selected' : '' }}> {{ $subject->name }}
-                                        </option>
+                                    <option value="{{ $subject->id }}" {{ old('subjectid')==$subject->id ? 'Selected' : ''
+                                        }}> {{ $subject->name }}
+                                    </option>
                                     @endforeach--}}
                                 </select>
 
@@ -125,8 +126,9 @@
                                 <select class="form-select" id="topic" name="topicid" required="">
                                     <option selected="" disabled>Select Topic</option>
                                     {{--@foreach ($subjects as $subject)
-                                        <option value="{{ $subject->id }}" {{ old('subjectid') == $subject->id ? 'Selected' : '' }}>{{ $subject->name }}
-                                        </option>
+                                    <option value="{{ $subject->id }}" {{ old('subjectid')==$subject->id ? 'Selected' : ''
+                                        }}>{{ $subject->name }}
+                                    </option>
                                     @endforeach--}}
                                 </select>
 
@@ -139,8 +141,9 @@
                                 <select class="form-select" id="subtopic" name="subtopicid" required="">
                                     <option selected="" disabled>Select SubTopic</option>
                                     {{--@foreach ($subjects as $subject)
-                                        <option value="{{ $subject->id }}" {{ old('subjectid') == $subject->id ? 'Selected' : '' }}>{{ $subject->name }}
-                                        </option>
+                                    <option value="{{ $subject->id }}" {{ old('subjectid')==$subject->id ? 'Selected' : ''
+                                        }}>{{ $subject->name }}
+                                    </option>
                                     @endforeach--}}
                                 </select>
 
@@ -155,13 +158,23 @@
                         </div>
 
                         <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label class="form-label" for="extract"> Excerpt </label>
+                                <textarea id="extract" name="extract" class="form-control form-control-lg" rows="4"
+                                    cols="100%"> {{ old('extract') }}</textarea>
+
+
+                            </div>
+                        </div>
+
+                        <div class="row mb-4">
                             <div class="col-md-12">
                                 <label class="form-label" for="content"> Content </label>
                                 <!-- Hidden input to hold HTML content -->
                                 <input type="hidden" name="info" id="hiddenContent">
 
                                 <!-- <textarea id="editor" name="content" class="postcontent" rows="20"
-                                                                                        cols="100%"> {{ old('content') }}</textarea> -->
+                                                                                                cols="100%"> {{ old('content') }}</textarea> -->
                                 <div id="editor" style="height: 400px;"></div>
 
                             </div>
@@ -254,6 +267,33 @@
                             $('#subject').append('<option value="" disabled selected> Select Subject</option>');
                             $.each(data, function (index, course) {
                                 $('#subject').append('<option value="' + course.id + '">' + course.name + '</option>');
+                                // $.each(subcategory.subcategories, function (index, subcategory) {
+                                //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
+                                // })
+                            })
+                        }
+                    })
+
+
+                }
+
+            });
+
+            $('#subject').on('change', function (e) {
+                var cid = e.target.value;
+                console.log(cid);
+                if (cid != '') {
+                    $.ajax({
+                        url: "{{ route('admin.lessons.filterbys') }}",
+                        type: "POST",
+                        data: {
+                            id: cid
+                        },
+                        success: function (data) {
+                            $('#lesson').empty();
+                            $('#lesson').append('<option value="" disabled selected> Select Lesson</option>');
+                            $.each(data, function (index, course) {
+                                $('#lesson').append('<option value="' + course.id + '">' + course.name + '</option>');
                                 // $.each(subcategory.subcategories, function (index, subcategory) {
                                 //     $('#subcategory').append('<option value="' + subcategory.id + '">&nbsp;&nbsp;' + subcategory.name + '</option>');
                                 // })

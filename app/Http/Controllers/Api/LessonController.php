@@ -5,17 +5,26 @@ use App\Http\Controllers\Controller;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 use App\Http\Resources\LessonResource;
-use App\Models\Schoolpro\Course;
-use App\Models\Schoolpro\Subject;
+use App\Models\Course;
+use App\Models\Subject;
 
 class LessonController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($cid, $sid)
+    public function index($sid)
     {
-        return LessonResource::collection(Lesson::where('course_id', '=', $cid)->where('subject_id', '=', $sid)->get());
+        return LessonResource::collection(Lesson::where('subject_id', '=', $sid)->get());
+    }
+
+     /**
+     * Display a listing of the resource.
+     */
+    public function lessonsbys($code)
+    {
+        $subject = Subject::where('code','=', $code)->first();
+        return LessonResource::collection(Lesson::where('subject_id', '=', $subject->id)->get());
     }
 
     /**

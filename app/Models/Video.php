@@ -14,8 +14,7 @@ class Video extends Model
 
     protected $fillable = [
         'topic_id',
-        'title',
-        'video_url',
+        'video_link',
     ];
 
     public function topic(): BelongsTo

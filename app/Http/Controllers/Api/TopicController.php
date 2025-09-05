@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
-
+use App\Http\Resources\TopicResource;
 use App\Models\Lesson;
 use App\Models\Topic;
 use Illuminate\Http\Request;
@@ -12,20 +12,9 @@ class TopicController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($lid)
     {
-        //
-         if (request()->ajax()) {
-            return datatables()->of(Topic::orderByDesc('id')->select('*'))
-                ->addColumn('action', 'admin.helper.action')
-                ->rawColumns(['action'])
-                ->addIndexColumn()
-                ->make(true);
-        }
-
-        // $langs    = Language::all();
-        $lessons = Lesson::all();
-        return view('admin.topic.index', ['lessons' => $lessons]);
+       return TopicResource::collection(Topic::where('lesson_id', '=', $lid)->where('parent_id', '=', null)->get());
 
     }
 
@@ -62,6 +51,16 @@ class TopicController extends Controller
         }
 
     }
+
+     /**
+     * Display a listing of the resource.
+     */
+    public function subtopics($tid)
+    {
+       return TopicResource::collection(Topic::where('parent_id', '=', $tid)->get());
+
+    }
+
 
     /**
      * Show the form for creating a new resource.

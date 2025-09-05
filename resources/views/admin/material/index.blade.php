@@ -215,8 +215,8 @@
                                     <tr>
                                     <tr>
                                         <th class="text-center" style="width: 50px;"></th>
-                                        <th>Name</th>
-                                        <!-- <th>Logo</th> -->
+                                        <th>Image</th>
+                                        <th>Audio</th>
                                         <!-- <th class="d-none d-sm-table-cell" style="width: 15%;">Access</th> -->
                                         <th class="text-center" style="width: 130px;">Actions</th>
                                     </tr>
@@ -404,6 +404,12 @@
                     {
                         data: 'image',
                         name: 'image',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'audio',
+                        name: 'audio',
                         orderable: false,
                         searchable: false
                     },

@@ -83,7 +83,7 @@
                                 <select class="form-select" id="course" name="courseid" required="">
                                     <option selected="" disabled> Select Course </option>
                                     @foreach ($courses as $course)
-                                    <option value="{{ $course->id }}" {{ $lesson->course_id == $course->id ? 'Selected' : '' }}>
+                                    <option value="{{ $course->id }}" {{ $scourse->id == $course->id ? 'Selected' : '' }}>
                                         {{ $course->name }}
                                     </option>
                                     @endforeach

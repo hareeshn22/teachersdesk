@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 
+use App\Http\Resources\MaterialResource;
 use App\Models\Material;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class MaterialController extends Controller
@@ -11,9 +13,24 @@ class MaterialController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($sid)
     {
-        //
+        // return MaterialResource::collection(Material::where('topic_id', '=', $sid)->get());
+        $materials = MaterialResource::collection(Material::where('topic_id', $sid)->get());
+
+        return response($materials, 200)
+            ->header('Content-Type', 'application/json')
+            ->header('X-App-Name', 'InfovictPlatform');
+
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function materialsbys($id)
+    {
+        // $subject = Subject::where('code','=', $code)->first();
+        return Material::collection(Material::where('topic_id', '=', $id)->get());
     }
 
     /**
@@ -21,7 +38,11 @@ class MaterialController extends Controller
      */
     public function create()
     {
-        //
+        // $images = Image::paginate(9);
+        $courses = Course::all();
+        $subjects = Subject::all();
+        return view('admin.lesson.add', compact('courses', 'subjects'));
+
     }
 
     /**
@@ -30,12 +51,31 @@ class MaterialController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, [
+            'name' => 'required',
+            // 'logo'  => 'required',
+            'content' => 'required',
+            'phone' => 'required',
+        ]);
+
+        Lesson::create([
+            'name' => $request->name,
+            'logo' => $request->logo,
+            'descr' => $request->descr,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'pcolor' => $request->pcolor,
+            'scolor' => $request->scolor,
+        ]);
+
+        return back()->with('success', 'You have successfully created the Lesson.');
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Material $material)
+    public function show(Lesson $Lesson)
     {
         //
     }
@@ -43,24 +83,52 @@ class MaterialController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Material $material)
+    public function edit($id)
     {
         //
+        // $images = Image::paginate(9);
+        $Lesson = Lesson::find($id);
+        return view('admin.Lesson.edit', ['Lesson' => $Lesson]);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Material $material)
+    public function update(Request $request)
     {
         //
+        $Lesson = Lesson::find($request->id);
+
+        // $Lesson->Lesson_id = $request->Lessonid;
+        $Lesson->name = $request->name;
+
+        $Lesson->descr = $request->descr;
+        $Lesson->phone = $request->phone;
+        $Lesson->address = $request->address;
+        $Lesson->pcolor = $request->pcolor;
+        $Lesson->scolor = $request->scolor;
+
+        if ($request->logo != '') {
+            $Lesson->logo = $request->logo;
+        }
+
+        $Lesson->save();
+
+        return redirect()->back()->with('success', 'You have successfully updated the Lesson.');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Material $material)
+    public function delete($id)
     {
         //
+        $Lesson = Lesson::find($id);
+        $Lesson->delete();
+
+        return redirect()->back()->with('success', 'You have successfully deleted the Lesson.');
+
     }
 }
