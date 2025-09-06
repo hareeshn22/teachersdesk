@@ -133,7 +133,7 @@ class ExampleController extends Controller
         ]);
 
         $example = Example::create([
-            'topic_id' => $validated['topicid'],
+            'topic_id' => $validated['subtopicid'],
             'extract' => $validated['extract'],
             'content' => $validated['info'],
         ]);
